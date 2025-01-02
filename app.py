@@ -79,32 +79,41 @@ def get_qr_code():
 def authenticate_user():
     try:
         data = request.get_json()
-        if not data or 'name' not in data:
-            return jsonify({"error": "Name is required"}), 400
+        password = data.get('password', None)
+        name = data.get('name', None)
 
-        name = data['name']
-        password = data.get('password', None)  # Optional password
+        # Check admin access based on the password
+        if password == "1234":
+            return jsonify({
+                "message": "Authentication successful (Admin mode)",
+                "is_admin": True,
+                "cleaner_id": None  # No specific cleaner tied to admin login
+            }), 200
 
-        conn = sqlite3.connect('cleaning.db')
-        c = conn.cursor()
+        # If no name is provided and the password is incorrect
+        if not name:
+            return jsonify({"error": "Name is required for non-admin access"}), 400
 
         # Check if the cleaner name exists in the database
+        conn = sqlite3.connect(DATABASE_PATH)
+        c = conn.cursor()
         c.execute("SELECT id FROM cleaners WHERE name = ?", (name,))
         cleaner = c.fetchone()
 
         if not cleaner:
             return jsonify({"error": "Invalid name"}), 400
 
-        # Check admin access based on the password
-        is_admin = False
-        if password == "1234":
-            is_admin = True
+        return jsonify({
+            "message": "Authentication successful",
+            "is_admin": False,
+            "cleaner_id": cleaner[0]
+        }), 200
 
-        return jsonify({"message": "Authentication successful", "is_admin": is_admin, "cleaner_id": cleaner[0]}), 200
     except Exception as e:
         return jsonify({"error": "Authentication failed", "details": str(e)}), 500
     finally:
-        conn.close()
+        if 'conn' in locals():
+            conn.close()
 
 # API endpoint for cleaners
 @app.route('/api/cleaners', methods=['GET', 'POST', 'DELETE'])
