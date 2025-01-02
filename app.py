@@ -228,4 +228,5 @@ if __name__ == '__main__':
     hostname = socket.gethostname()
     local_ip = socket.gethostbyname(hostname)
     print(f"App is running and accessible at: http://{local_ip}:8000")
-    socketio.run(app, host='0.0.0.0', port=8000, debug=True)
+    socketio.run(app, host='0.0.0.0', port=int(os.environ.get("PORT", 8000)), debug=True)
+    #socketio.run(app, host='0.0.0.0', port=8000, debug=True)
