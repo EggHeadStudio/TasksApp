@@ -11,9 +11,13 @@ app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 socketio = SocketIO(app)
 
+# Set the database path
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE_PATH = os.path.join(BASE_DIR, 'cleaning.db')
+
 # Database initialization
 def init_db():
-    with sqlite3.connect('cleaning.db') as conn:
+    with sqlite3.connect(DATABASE_PATH) as conn:  # Use the correct path
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS cleaners (
                         id INTEGER PRIMARY KEY AUTOINCREMENT, 
