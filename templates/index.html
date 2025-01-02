@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaning Manager</title>
+    <!-- Correctly link the CSS file using Flask's url_for -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Link favicon for better UX -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+    <div id="top-bar">
+        <!-- QR Code Section -->
+        <div id="qr-code-container">
+            <img id="qr-code" src="{{ url_for('static', filename='qr_code.png') }}" alt="QR Code for App Access">
+        </div>
+    </div>
+
+    <h1>Cleaning Manager</h1>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Enter Name" required>
+                <input type="password" id="password" placeholder="Enter Password (optional)">
+                <button type="submit">Login</button>
+            </form>
+            <div id="loginError" class="error-message" style="display: none;">
+                Invalid credentials. Please try again.
+            </div>
+        </div>
+    </div>
+
+    <!-- Week View -->
+    <h2>Week View</h2>
+    <table id="weekView">
+        <thead>
+            <tr>
+                <th>Cleaner</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Feedback Section -->
+    <div id="feedback" style="display: none; margin-bottom: 20px;"></div>
+
+    <!-- Add Cleaner Section -->
+    <button class="dropdown-btn admin-only" onclick="toggleSection('addCleanerSection')">Add Cleaner</button>
+    <div id="addCleanerSection" class="collapsible-section admin-only">
+        <form id="addCleanerForm">
+            <input type="text" id="cleanerName" placeholder="Cleaner Name" required>
+            <button type="submit">Add Cleaner</button>
+        </form>
+    </div>
+
+    <!-- Manage Cleaners Section -->
+    <button class="dropdown-btn admin-only" onclick="toggleSection('manageCleanersSection')">Manage Cleaners</button>
+    <div id="manageCleanersSection" class="collapsible-section admin-only">
+        <div id="cleanersList">
+            <!-- Cleaner list with delete functionality will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <!-- Add Task Section -->
+    <button class="dropdown-btn admin-only" onclick="toggleSection('addTaskSection')">Add Task</button>
+    <div id="addTaskSection" class="collapsible-section admin-only">
+        <form id="addTaskForm">
+            <select id="cleanerSelect" required>
+                <option value="" disabled selected>Select Cleaner</option>
+            </select>
+            <select id="daySelect" required>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+            <input type="text" id="taskDescription" placeholder="Task Description" required>
+            <button type="submit" id="addTaskButton" disabled>Add Task</button>
+        </form>
+    </div>
+
+    <!-- Manage Tasks Section -->
+    <button class="dropdown-btn admin-only" onclick="toggleSection('manageTasksSection')">Manage Tasks</button>
+    <div id="manageTasksSection" class="collapsible-section admin-only">
+        <div id="tasksList">
+            <!-- Task list with delete and checkbox functionality will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <!-- Add WebSocket for real-time updates -->
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <!-- Correctly link the JavaScript file using Flask's url_for -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

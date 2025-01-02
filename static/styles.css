@@ -1,0 +1,366 @@
+/* --------------------------
+   GENERAL STYLES
+-------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    max-width: 900px; /* Slightly wider to give a more spacious feel */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f7f9; /* Softer off-white background */
+    color: #1f1f1f;  /* Dark but soft text color */
+    line-height: 1.6;
+}
+
+/* HEADINGS */
+h1, h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* TABLE WRAPPER */
+table {
+    width: 100%;
+    border-collapse: separate; /* Allows for more styling control */
+    border-spacing: 0;        /* Remove extra space */
+    margin-top: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    border-radius: 8px; /* Slightly more rounded corners */
+    overflow: hidden;   /* Ensure radius applies */
+    background-color: #ffffff;
+}
+
+/* TABLE HEADERS & DATA CELLS */
+th, td {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid #ebeef2;
+}
+
+/* TABLE HEADER STYLING */
+th {
+    background-color: #546078; /* Muted navy/gray for a premium feel */
+    color: #ffffff;            /* White text for contrast */
+    border: none;
+    text-transform: uppercase; 
+    font-weight: 500;
+    letter-spacing: 1px;
+    box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2),
+    0px 0px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* LAST ROW BOTTOM BORDER REMOVAL */
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* DATA CELLS */
+td {
+    background-color: #ffffff;
+    box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2),
+    0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* FLEX WRAPPER INSIDE CELLS */
+td div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* CURRENT DAY HIGHLIGHT */
+th.current-day,
+td.current-day {
+    background-color: #f9fcff; /* Soft highlight for current day */
+    color: #546078;
+    box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2),
+    0px 0px 4px rgba(0, 0, 0, 0.2);
+    font-weight: 700;
+}
+
+/* COMPLETED TASKS */
+.completed-task {
+    background-color: #d4edda !important; /* Light green for completed */
+    color: #155724 !important;           /* Dark green text */
+    font-weight: bold;
+}
+
+/* --------------------------
+   FORMS & BUTTONS
+-------------------------- */
+form {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: #ffffff;
+    padding: 16px;
+    border: 1px solid #ebeef2;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+input,
+select,
+button {
+    margin: 5px 0;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+/* INPUT FOCUS */
+input:focus,
+select:focus {
+    border-color: #6074e7;
+    outline: none;
+    box-shadow: 0px 0px 6px rgba(96, 116, 231, 0.3);
+}
+
+/* GENERAL BUTTON */
+button {
+    background-color: #6074e7; /* A premium, soft-purple color */
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #4e5fc2;
+    transform: translateY(-1px);
+}
+
+/* DELETE BUTTON */
+button.delete-button {
+    background-color: #df4759;
+}
+
+button.delete-button:hover {
+    background-color: #c93c4d;
+}
+
+/* DROPDOWN BUTTON STYLES */
+.dropdown-btn {
+    background-color: #6074e7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 12px 15px;
+    text-align: left;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 10px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.06);
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-btn:hover {
+    background-color: #4e5fc2;
+}
+
+/* --------------------------
+   COLLAPSIBLE SECTIONS
+-------------------------- */
+.collapsible-section {
+    display: none;
+    margin-top: 10px;
+    padding: 16px;
+    border: 1px solid #ebeef2;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+    transition: max-height 0.3s ease;
+}
+
+.collapsible-section.active {
+    display: block;
+}
+
+/* FEEDBACK STYLES */
+#feedback {
+    padding: 12px;
+    font-weight: 500;
+    border-radius: 8px;
+    border: 1px solid #17a2b8;
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+/* CLEANER & TASK MANAGEMENT SECTIONS */
+#cleanersList div,
+#tasksList div {
+    margin-bottom: 10px;
+    padding: 16px;
+    border: 1px solid #ebeef2;
+    border-radius: 6px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+#cleanersList div button,
+#tasksList div button {
+    font-size: 12px;
+    padding: 6px 12px;
+}
+
+/* --------------------------
+   QR CODE
+-------------------------- */
+#qr-code-container {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    padding: 12px;
+    background-color: #ffffff;
+    border: 1px solid #ebeef2;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#qr-code-container img {
+    width: 150px;
+    height: 150px;
+    display: block;
+}
+
+/* --------------------------
+   MODAL STYLING
+-------------------------- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* Ensure it stays on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px); /* Add blur to the background */
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent dark overlay */
+    display: flex; /* Center the modal */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px; /* Keep it responsive */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* Add more depth */
+    text-align: center;
+
+    position: relative; /* Remove previous position settings */
+    transform: none;    /* Remove translate adjustments */
+    top: 20%;
+    margin: 0 auto;     /* Center on X-axis */
+}
+
+.modal-content h2 {
+    font-size: 24px;
+    color: #333333;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.modal-content form input {
+    width: calc(100% - 20px); /* Responsive width */
+    margin-bottom: 15px;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.modal-content form input:focus {
+    border-color: #6074e7;
+    outline: none;
+    box-shadow: 0px 0px 6px rgba(96, 116, 231, 0.3); /* Subtle focus effect */
+}
+
+.modal-content form button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #6074e7;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-content form button:hover {
+    background-color: #4e5fc2;
+    transform: translateY(-1px); /* Subtle hover effect */
+}
+
+.error-message {
+    color: #df4759;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none; /* Hidden by default */
+}
+
+/* --------------------------
+   RESPONSIVE TABLE STYLING
+-------------------------- */
+@media (max-width: 768px) {
+    table {
+        font-size: 13px;
+    }
+    th, td {
+        padding: 10px;
+    }
+
+    #qr-code-container {
+        display: none; /* Hide QR Code on smaller screens for space */
+    }
+}
+
+/* MOBILE PORTRAIT: Show only "Cleaners" and current day */
+@media (max-width: 768px) and (orientation: portrait) {
+    th, td {
+        display: none;
+    }
+
+    th.cleaner, td.cleaner, 
+    th.current-day, td.current-day {
+        display: table-cell;
+    }
+
+    #weekView {
+        width: 100%;
+    }
+}
+
+/* MOBILE LANDSCAPE: Show all columns, hide other sections */
+@media (max-width: 768px) and (orientation: landscape) {
+    th, td {
+        display: table-cell;
+    }
+
+    body > *:not(#weekView) {
+        display: none;
+    }
+
+    #weekView {
+        margin-top: 0;
+    }
+}
