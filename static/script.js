@@ -1,4 +1,3 @@
-//let API_URL = ''; // This will be dynamically set after fetching the server IP
 API_URL = `${window.location.origin}/api`;
 
 // Authenticate the user
@@ -108,7 +107,6 @@ async function initializeApiUrl() {
 
         // Dynamically set the API URL
         const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
-        //API_URL = `${protocol}//${data.ip}:8000/api`;
         API_URL = `${window.location.origin}/api`;
         console.log('API URL initialized to:', API_URL);
 
@@ -161,11 +159,19 @@ function toggleSection(sectionId) {
     }
 }
 
-// Update the QR code
+// Update the QR code dynamically
 async function updateQrCode() {
     const qrCodeImg = document.getElementById('qr-code');
-    qrCodeImg.src = `${API_URL.replace('/api', '/api/qr')}?t=${Date.now()}`;
+
+    // Fetch the QR code dynamically from the server
+    qrCodeImg.src = `/api/qr?t=${Date.now()}`;
 }
+
+// Update the QR code for dynamic ip
+//async function updateQrCode() {
+//    const qrCodeImg = document.getElementById('qr-code');
+//    qrCodeImg.src = `${API_URL.replace('/api', '/api/qr')}?t=${Date.now()}`;
+//}
 
 // Initialize WebSocket for real-time updates
 function initializeWebSocket() {

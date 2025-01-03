@@ -52,19 +52,17 @@ init_db()
 def index():
     return render_template('index.html')
 
-# Route to provide the server IP
+# Route to provide the QR code manually
 @app.route('/api/ip', methods=['GET'])
 def get_ip():
-    hostname = socket.gethostname()
-    local_ip = socket.gethostbyname(hostname)
-    return jsonify({"ip": local_ip})
+    # Return the Render app URL instead of the local IP
+    return jsonify({"ip": "tasksapp-qcba.onrender.com"})
 
-# Route to provide the QR code for the IP
+# Route to provide the QR code for the Render URL
 @app.route('/api/qr', methods=['GET'])
 def get_qr_code():
-    hostname = socket.gethostname()
-    local_ip = socket.gethostbyname(hostname)
-    ip_url = f"http://{local_ip}:8000"
+    # Use the Render application URL
+    render_url = "https://tasksapp-qcba.onrender.com"
 
     # Generate QR code
     qr = qrcode.QRCode(
@@ -73,7 +71,7 @@ def get_qr_code():
         box_size=10,
         border=4,
     )
-    qr.add_data(ip_url)
+    qr.add_data(render_url)
     qr.make(fit=True)
 
     # Ensure the static directory exists
@@ -83,7 +81,49 @@ def get_qr_code():
     # Save QR code as an image
     qr_img_path = "static/qr_code.png"
     qr.make_image(fill_color="black", back_color="white").save(qr_img_path)
+    print(f"QR code generated for URL: {render_url}")  # Debugging info
     return send_file(qr_img_path, mimetype='image/png')
+
+@app.route('/api/debug-static', methods=['GET'])
+def debug_static():
+    static_path = 'static'
+    if os.path.exists(static_path):
+        return jsonify({"files": os.listdir(static_path)})
+    return jsonify({"error": "Static directory not found"}), 404
+
+# If used in local network, use this route:
+# Route to provide the server IP
+#@app.route('/api/ip', methods=['GET'])
+#def get_ip():
+#    hostname = socket.gethostname()
+#    local_ip = socket.gethostbyname(hostname)
+#    return jsonify({"ip": local_ip})
+
+## Route to provide the QR code for the IP
+#@app.route('/api/qr', methods=['GET'])
+#def get_qr_code():
+#    hostname = socket.gethostname()
+#    local_ip = socket.gethostbyname(hostname)
+#    ip_url = f"http://{local_ip}:8000"
+#
+#    # Generate QR code
+#    qr = qrcode.QRCode(
+#        version=1,
+#        error_correction=qrcode.constants.ERROR_CORRECT_L,
+#        box_size=10,
+#        border=4,
+#    )
+#    qr.add_data(ip_url)
+#    qr.make(fit=True)
+#
+#    # Ensure the static directory exists
+#    if not os.path.exists('static'):
+#        os.makedirs('static')
+#
+#    # Save QR code as an image
+#    qr_img_path = "static/qr_code.png"
+#    qr.make_image(fill_color="black", back_color="white").save(qr_img_path)
+#    return send_file(qr_img_path, mimetype='image/png')
 
 # Route for user authentication
 @app.route('/api/authenticate', methods=['POST'])
