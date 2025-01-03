@@ -126,10 +126,15 @@ def cleaners():
             with conn.cursor() as c:
                 if request.method == 'POST':  # Add a cleaner
                     data = request.get_json()
-                    c.execute("INSERT INTO cleaners (name) VALUES (%s)", (data['name'],))
-                    conn.commit()
-                    socketio.emit('update')
-                    return jsonify({"message": "Cleaner added successfully"}), 201
+                    try:
+                        c.execute("INSERT INTO cleaners (name) VALUES (%s) RETURNING id, name", (data['name'],))
+                        cleaner = c.fetchone()
+                        conn.commit()
+                        socketio.emit('update')
+                        return jsonify({"id": cleaner[0], "name": cleaner[1], "message": "Cleaner added successfully"}), 201
+                    except psycopg2.IntegrityError as e:
+                        conn.rollback()
+                        return jsonify({"error": f"Cleaner with name '{data['name']}' already exists."}), 400
 
                 elif request.method == 'DELETE':  # Delete a cleaner
                     cleaner_id = request.args.get('id')
@@ -146,8 +151,10 @@ def cleaners():
 
     except Exception as e:
         print(f"Error in /api/cleaners: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-
+        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
+    finally:
+        conn.close()
+        
 # API endpoint for tasks
 @app.route('/api/tasks', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def tasks():
@@ -187,6 +194,8 @@ def tasks():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
 
 # Run the app
 if __name__ == '__main__':
