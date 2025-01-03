@@ -37,6 +37,11 @@ def init_db():
                         completed BOOLEAN NOT NULL DEFAULT 0, 
                         FOREIGN KEY (cleaner_id) REFERENCES cleaners(id)
                     )''')
+        # Check if the "Admin" user exists and insert it if not
+        c.execute("SELECT COUNT(*) FROM cleaners WHERE name = ?", ("Admin",))
+        if c.fetchone()[0] == 0:
+            c.execute("INSERT INTO cleaners (name) VALUES (?)", ("Admin",))
+            print("Admin user added to the database.")
         conn.commit()
 
 # Initialize database on app startup
@@ -125,7 +130,7 @@ def authenticate_user():
 @app.route('/api/cleaners', methods=['GET', 'POST', 'DELETE'])
 def cleaners():
     try:
-        conn = sqlite3.connect('cleaning.db')
+        conn = sqlite3.connect(DATABASE_PATH)
         c = conn.cursor()
         
         if request.method == 'POST':  # Add a cleaner
@@ -162,7 +167,7 @@ def cleaners():
 @app.route('/api/tasks', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def tasks():
     try:
-        conn = sqlite3.connect('cleaning.db')
+        conn = sqlite3.connect(DATABASE_PATH)
         c = conn.cursor()
 
         if request.method == 'POST':  # Add a task

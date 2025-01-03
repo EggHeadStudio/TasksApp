@@ -119,10 +119,9 @@ async function initializeApiUrl() {
 // Event listener for login form submission
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
+    const name = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-    // Send name and password to authenticateUser
     const user = await authenticateUser(name, password);
     if (user) {
         await initializeApp(user);
