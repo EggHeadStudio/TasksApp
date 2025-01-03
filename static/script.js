@@ -1,4 +1,5 @@
-let API_URL = ''; // This will be dynamically set after fetching the server IP
+//let API_URL = ''; // This will be dynamically set after fetching the server IP
+API_URL = `${window.location.origin}/api`;
 
 // Authenticate the user
 async function authenticateUser(name, password) {
@@ -107,7 +108,8 @@ async function initializeApiUrl() {
 
         // Dynamically set the API URL
         const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
-        API_URL = `${protocol}//${data.ip}:8000/api`;
+        //API_URL = `${protocol}//${data.ip}:8000/api`;
+        API_URL = `${window.location.origin}/api`;
         console.log('API URL initialized to:', API_URL);
 
         // Show the login modal on app load
