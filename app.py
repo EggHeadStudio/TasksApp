@@ -15,6 +15,12 @@ socketio = SocketIO(app)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE_PATH = os.path.join(BASE_DIR, 'cleaning.db')
 
+print(f"Database path: {DATABASE_PATH}")
+if os.path.exists(DATABASE_PATH):
+    print("Database file found.")
+else:
+    print("Database file NOT found.")
+
 # Database initialization
 def init_db():
     with sqlite3.connect(DATABASE_PATH) as conn:  # Use the correct path
