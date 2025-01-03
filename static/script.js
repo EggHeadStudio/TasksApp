@@ -104,7 +104,10 @@ async function initializeApiUrl() {
             throw new Error('Failed to fetch server IP');
         }
         const data = await response.json();
-        API_URL = `http://${data.ip}:8000/api`;
+
+        // Dynamically set the API URL
+        const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
+        API_URL = `${protocol}//${data.ip}:8000/api`;
         console.log('API URL initialized to:', API_URL);
 
         // Show the login modal on app load
