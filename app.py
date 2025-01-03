@@ -37,8 +37,9 @@ def init_db():
                             FOREIGN KEY (cleaner_id) REFERENCES cleaners(id)
                         )''')
             # Add Admin user if not present
-            c.execute("SELECT COUNT(*) FROM cleaners WHERE name = %s", ("Admin",))
-            if c.fetchone()[0] == 0:
+            c.execute("SELECT COUNT(*) AS count FROM cleaners WHERE name = %s", ("Admin",))
+            result = c.fetchone()
+            if result["count"] == 0:  # Use dictionary key instead of index
                 c.execute("INSERT INTO cleaners (name) VALUES (%s)", ("Admin",))
                 print("Admin user added to the database.")
             conn.commit()
