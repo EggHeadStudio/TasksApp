@@ -145,6 +145,7 @@ def cleaners():
                     return jsonify(cleaners)
 
     except Exception as e:
+        print(f"Error in /api/cleaners: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 # API endpoint for tasks
