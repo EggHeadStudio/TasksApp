@@ -99,15 +99,14 @@ function highlightCurrentDay() {
 async function initializeApiUrl() {
     try {
         console.log('Fetching server IP...');
-        const response = await fetch('/api/ip');
+        const response = await fetch(`${window.location.origin}/api/ip`);
         if (!response.ok) {
             throw new Error('Failed to fetch server IP');
         }
         const data = await response.json();
 
-        // Dynamically set the API URL
-        const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
-        API_URL = `${window.location.origin}/api`;
+        // Dynamically set the API URL based on the server response
+        API_URL = `${data.ip}/api`;
         console.log('API URL initialized to:', API_URL);
 
         // Show the login modal on app load
@@ -164,7 +163,7 @@ async function updateQrCode() {
     const qrCodeImg = document.getElementById('qr-code');
 
     // Fetch the QR code dynamically from the server
-    qrCodeImg.src = `/api/qr?t=${Date.now()}`;
+    qrCodeImg.src = `${API_URL.replace('/api', '')}/api/qr?t=${Date.now()}`;
 }
 
 // Update the QR code for dynamic ip

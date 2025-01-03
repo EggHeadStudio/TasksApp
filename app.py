@@ -75,6 +75,12 @@ def get_qr_code():
     qr.make_image(fill_color="black", back_color="white").save(qr_img_path)
     return send_file(qr_img_path, mimetype='image/png')
 
+# Route to provide the Render application URL or IP
+@app.route('/api/ip', methods=['GET'])
+def get_ip():
+    # Return the Render app URL as the IP is irrelevant in production
+    return jsonify({"ip": "https://tasksapp-qcba.onrender.com"})
+
 # Route for user authentication
 @app.route('/api/authenticate', methods=['POST'])
 def authenticate_user():
