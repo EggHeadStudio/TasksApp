@@ -12,7 +12,7 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 socketio = SocketIO(app)
 
 # PostgreSQL database URL
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/cleaning_app_db")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://cleaning_app_db_user:OuFFL7EALuKUT1OnXOhT4HA7kVmWlrJq@dpg-cts1b4rtq21c7394qbb0-a/cleaning_app_db")
 
 # Create database connection
 def get_db_connection():
